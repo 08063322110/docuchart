@@ -1,0 +1,30 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String    @default("user")
+  tier         String    @default("free")
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([email])
+}
+
+// You will add Document, Conversation, Message, Chunk,
+// RefreshToken, and other models in the coming days.
+// Each follows the same pattern: cuid() IDs, timestamps,
+// foreign keys for relationships, constraints for safety.
+
